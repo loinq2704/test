@@ -34,6 +34,7 @@ public class ManageProductController extends HttpServlet {
         if (service.equals("listAll")) {
             Vector<Product> products = (new ProductDAO()).getAll();
 
+            System.out.println("Test GIT");
             req.setAttribute("allProducts", products);
             req.getRequestDispatcher("admin.index.jsp").forward(req, resp);
         }
