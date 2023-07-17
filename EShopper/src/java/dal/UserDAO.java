@@ -191,13 +191,13 @@ public class UserDAO extends DBContext {
         ResultSet rs = null;
         Vector<User> customers = new Vector<>();
         String sql = "select * from [user]\n"
-                + "where [fullname] LIKE ? and role_id = 1";
+                + "where role_id = 1 and [fullname] LIKE ?";
         try {
             stm = connection.prepareStatement(sql);
-            stm.setString(1, name);
+            stm.setString(1, "%" + name + "%");
             rs = stm.executeQuery();
-
-            if (rs.next()) {
+            
+            while (rs.next()) {
                 User u = new User();
                 u.setId(rs.getInt("id"));
                 u.setUsername(rs.getString("username"));
@@ -211,7 +211,6 @@ public class UserDAO extends DBContext {
 
                 customers.add(u);
             }
-            
             return customers;
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class

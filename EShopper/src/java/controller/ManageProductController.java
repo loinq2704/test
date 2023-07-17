@@ -34,6 +34,7 @@ public class ManageProductController extends HttpServlet {
         if (service.equals("listAll")) {
             Vector<Product> products = (new ProductDAO()).getAll();
 
+            req.setAttribute("showSearchProduct", "Yes");
             req.setAttribute("allProducts", products);
             req.getRequestDispatcher("admin.index.jsp").forward(req, resp);
         }
@@ -75,7 +76,7 @@ public class ManageProductController extends HttpServlet {
             req.setAttribute("allBrands", brands);
             req.getRequestDispatcher("admin.index.jsp").forward(req, resp);
         }
-        
+
         if (service.equals("sendInsertDetail")) {
             String name = req.getParameter("name");
             double price = Double.parseDouble(req.getParameter("price"));
@@ -84,13 +85,28 @@ public class ManageProductController extends HttpServlet {
             String image_url = req.getParameter("image_url");
             int brandId = Integer.parseInt(req.getParameter("brand"));
             Date release_date = Date.valueOf(req.getParameter("release_date"));
-            
+
             Product product = new Product(quantity, brandId, name, description, image_url, price, release_date);
             int gerenatedProductId = (new ProductDAO()).insertProduct(product);
             req.setAttribute("InsertDone", "Insert a new Product (ID = " + gerenatedProductId + ")\nClick Product Manager to see all changes");
             req.getRequestDispatcher("admin.index.jsp").forward(req, resp);
         }
 
+        if (service.equals("searchByKeywords")) {
+            String keywords = req.getParameter("keywords");
+
+            Vector<Product> products = (new ProductDAO()).getProductsByKeywords(keywords);
+
+            if (products == null || products.isEmpty()) {
+                req.setAttribute("notFoundProduct", "Your keywords do not match with any Product Name");
+                products = (new ProductDAO()).getAll();
+            }
+
+            req.setAttribute("allProducts", products);
+            req.setAttribute("keywords", keywords);
+            req.setAttribute("showSearchProduct", "Yes");
+            req.getRequestDispatcher("admin.index.jsp").forward(req, resp);
+        }
     }
 
 }

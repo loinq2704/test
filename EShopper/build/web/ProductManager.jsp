@@ -13,17 +13,53 @@
         <title>JSP Page</title>
     </head>
     <body>
+        <h1 class="font-weight-semi-bold text-uppercase mb-3 text-center">
+            Products Manager
+        </h1>
+
+        <!--Insert a new product-->
+        <a class="btn btn-block btn-primary my-3 py-3" 
+           style="transform: translateX(25vw); width: 25%;"
+           href="manageProduct?service=requestInsert"
+           >
+            Insert a new Product
+        </a>
+
+        <c:if test="${showSearchProduct ne null}">
+            <!--Search product by name-->
+            <div
+                class="d-flex align-items-center justify-content-between mb-4"
+                >
+                <form action="manageProduct" id="searchByName">
+                    <input type="hidden" name="service" value="searchByKeywords"/>
+                    <div class="input-group">
+                        <input
+                            type="text"
+                            class="form-control"
+                            placeholder="Search by name"
+                            name="keywords"
+                            value="${keywords}"
+                            />
+                        <div class="input-group-append">
+                            <button class="search-button btn btn-primary" type="submit">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>            
+            </div>
+        </c:if>
+
+        <c:if test="${notFoundProduct ne null}">
+            <h4 class="font-weight-semi-bold text-uppercase mb-3 text-center">
+                ${notFoundProduct}
+            </h4>
+        </c:if>
+
         <!--List all Product-->
         <c:if test="${not empty allProducts}">
-            <h1 class="font-weight-semi-bold text-uppercase mb-3 text-center">
-                Products Manager
-            </h1>
-            <a class="btn btn-block btn-primary my-3 py-3" 
-               style="transform: translateX(25vw); width: 25%;"
-               href="manageProduct?service=requestInsert"
-               >
-                Insert a new Product
-            </a>
+
+
             <div class="col-lg-12 table-responsive mb-5">
                 <table class="table table-bordered text-center mb-0">
                     <thead class="bg-secondary text-dark">

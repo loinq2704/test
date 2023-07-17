@@ -16,6 +16,35 @@
         <h1 class="font-weight-semi-bold text-uppercase mb-3 text-center">
             Customers Manager
         </h1>
+
+        <!--Search customer by name-->
+        <div
+            class="d-flex align-items-center justify-content-between mb-4"
+            >
+            <form action="manageCustomer" id="searchByName">
+                <input type="hidden" name="service" value="searchByKeywords"/>
+                <div class="input-group">
+                    <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Search by name"
+                        name="keywords"
+                        value="${keywords}"
+                        />
+                    <div class="input-group-append">
+                        <button class="search-button btn btn-primary" type="submit">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>            
+        </div>
+
+        <c:if test="${notFoundCustomer ne null}">
+            <h4 class="font-weight-semi-bold text-uppercase mb-3 text-center">
+                ${notFoundCustomer}
+            </h4>
+        </c:if>
         <div class="col-lg-12 table-responsive mb-5">
             <table class="table table-bordered text-center mb-0">
                 <thead class="bg-secondary text-dark">
