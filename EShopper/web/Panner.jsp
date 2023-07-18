@@ -186,8 +186,8 @@
                             <div class="navbar-nav mr-auto py-0">
                                 <a href="customer" class="nav-item nav-link active">Shop</a>
                                 <a href="#product" class="nav-item nav-link">Products</a>
-
                                 <a href="#footer" class="nav-item nav-link">Contact</a>
+                                <a href="admin" class="nav-item nav-link">Shop Manager</a>
                             </div>
                             <div class="navbar-nav ml-auto py-0">
                                 <c:if test="${sessionScope.user eq null}" >

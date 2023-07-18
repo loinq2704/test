@@ -107,6 +107,24 @@ public class ManageProductController extends HttpServlet {
             req.setAttribute("showSearchProduct", "Yes");
             req.getRequestDispatcher("admin.index.jsp").forward(req, resp);
         }
+        
+        if (service.equals("requestDelete")) {
+            String productId_raw = req.getParameter("productId");
+            int productId = Integer.parseInt(productId_raw);
+            
+            int n = (new ProductDAO()).deletetProduct(productId);
+            if (n == 1) {
+                req.setAttribute("deleteDone", "Delete Product (Id = " + productId +") done!");
+            } else {
+                req.setAttribute("deleteDone", "Failed to delete Product (Id  = " + productId + ") because this product is asociated with an order.");
+            }
+            
+            Vector<Product> products = (new ProductDAO()).getAll();
+
+            req.setAttribute("showSearchProduct", "Yes");
+            req.setAttribute("allProducts", products);
+            req.getRequestDispatcher("admin.index.jsp").forward(req, resp);
+        }
     }
 
 }

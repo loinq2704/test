@@ -56,6 +56,12 @@
             </h4>
         </c:if>
 
+        <c:if test="${deleteDone ne null}">
+            <h4 class="font-weight-semi-bold text-uppercase mb-3 text-center">
+                ${deleteDone}
+            </h4>
+        </c:if>
+
         <!--List all Product-->
         <c:if test="${not empty allProducts}">
 
@@ -84,12 +90,18 @@
                                 <td class="align-middle">${product.quantity}</td>
                                 <td class="align-middle">${product.release_date}</td>
                                 <td><a href="manageProduct?service=requestUpdate&productId=${product.id}">Update</a></td>
-                                <td><a href="manageProduct?service=requestDelete&productId=${product.id}">Delete</a></td>
+                                <td><a href="manageProduct?service=requestDelete&productId=${product.id}" onclick="return confirmDelete(${product.id})">Delete</a></td>
                             </tr>
                         </c:forEach>
                     </tbody>
                 </table>
             </div>
+
+            <script>
+                function confirmDelete(productId) {
+                    return confirm("Are you sure you want to delete this Product (ID = " + productId + ") ?");
+                }
+            </script>
         </c:if>
         <!--List all Product End-->
 

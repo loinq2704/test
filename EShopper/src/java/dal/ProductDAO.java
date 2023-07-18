@@ -81,7 +81,7 @@ public class ProductDAO extends DBContext {
             stm.setInt(6, p.getBrand_id());
             stm.setDate(7, p.getRelease_date());
             stm.executeUpdate();
-            
+
             //get generatedId
             rs = stm.getGeneratedKeys();
             if (rs.next()) {
@@ -134,6 +134,37 @@ public class ProductDAO extends DBContext {
                         .getName()).log(Level.SEVERE, null, ex);
             }
         }
+    }
+
+    public int deletetProduct(int id) {
+        int n = 0;
+        PreparedStatement stm = null;
+        ResultSet rs = getData("select * from [dbo].[order_detail] where product_id = " + id);
+
+        String sql = "DELETE FROM [dbo].[product]\n"
+                + "      WHERE id = ?";
+        try {
+            if (!rs.next()) {
+                stm = connection.prepareStatement(sql);
+                stm.setInt(1, id);
+                
+                n = stm.executeUpdate();
+            }
+            
+        } catch (SQLException ex) {
+            n = -1;
+            Logger.getLogger(ProductDAO.class
+                    .getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                rs.close();
+                connection.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(ProductDAO.class
+                        .getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return n;
     }
 
     public Product getProductsById(int productId) {
