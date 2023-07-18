@@ -6,6 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@page import="model.CartItem, model.Product, java.text.DecimalFormat" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -133,7 +134,12 @@
                                                 String id = ens.nextElement().toString();
 
                                                 if (!id.equals("user") && !id.equals("fullname") && !id.equals("numberProductsInCart")) {
-                                                    numberProductsInCart++;
+                                                    //numberProductsInCart++;
+                                                    
+                                                    CartItem cartItem = (CartItem) session.getAttribute(id); 
+                                                    Product product = cartItem.getProduct();
+                                                    int quantity = cartItem.getQuantity();
+                                                    numberProductsInCart += quantity;
                                     }
                                 }
                                 session.setAttribute("numberProductsInCart", numberProductsInCart);

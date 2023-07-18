@@ -197,4 +197,54 @@ public class BillDAO extends DBContext {
         return billDetailForAdmins;
     }
 
+    public Vector<BillDetailForAdmin> showBillDetailForAdminFilterByStatus(String status) {
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        Vector<BillDetailForAdmin> billDetailForAdmins = new Vector<>();
+
+        String sql = "select b.id, u.fullname as [Customer Name], b.created_date,\n"
+                + "u.address, u.email, u.phone,\n"
+                + "SUM(price * product_quantity) as [Total], b.[status] from [bill] b\n"
+                + "join [order_detail] od on od.order_id = b.order_id\n"
+                + "join [user] u on u.id = b.[user_id]\n"
+                + "where b.status = ?\n"
+                + "group by b.id, u.fullname , b.created_date, b.[status], u.address, u.email, u.phone";
+        try {
+            stm = connection.prepareStatement(sql);
+            stm.setString(1, status);
+            rs = stm.executeQuery();
+
+            while (rs.next()) {
+                BillDetailForAdmin bdfa = new BillDetailForAdmin();
+                bdfa.setId(rs.getInt("id"));
+                bdfa.setCustomerName(rs.getString("Customer Name"));
+                bdfa.setCreated_date(rs.getDate("created_date"));
+                bdfa.setAddress(rs.getString("address"));
+                bdfa.setEmail(rs.getString("email"));
+                bdfa.setPhone(rs.getString("phone"));
+                bdfa.setTotal(rs.getDouble("Total"));
+                bdfa.setStatus(rs.getString("status"));
+
+                billDetailForAdmins.add(bdfa);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(BillDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stm != null) {
+                    stm.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(BillDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return billDetailForAdmins;
+    }
+
 }

@@ -14,7 +14,7 @@ u.address, u.email, u.phone,
 SUM(price * product_quantity) as [Total], b.[status] from [bill] b
 join [order_detail] od on od.order_id = b.order_id
 join [user] u on u.id = b.[user_id]
---where b.id = 72
+where b.status = 'done'
 group by b.id, u.fullname , b.created_date, b.[status], u.address, u.email, u.phone
 
 -- query select bill detail for customer

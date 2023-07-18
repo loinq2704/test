@@ -17,6 +17,93 @@
             Bill Manager
         </h1>
         <c:if test="${not empty billDetailForAdmins}">
+            <!--Filter by status-->
+            <div class="border-bottom mb-4 pb-4">
+                <h5 class="font-weight-semi-bold mb-4">Filter by Status</h5>
+                <form>
+                    <!--Status all-->
+                    <div
+                        class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3"
+                        >
+                        <input
+                            type="checkbox"
+                            class="custom-control-input"
+                            name="status"
+                            id="all"
+                            onchange="filterStatus(this.id)"
+
+                            />
+                        <label class="custom-control-label" for="all"
+                               >All Status</label
+                        >
+                    </div>
+
+                    <!--Status Wait-->
+                    <div
+                        class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3"
+                        >
+                        <input
+                            type="checkbox"
+                            class="custom-control-input"
+                            name="status"
+                            id="wait"
+                            onchange="filterStatus(this.id)"
+
+                            />
+                        <label class="custom-control-label" for="wait"
+                               >Wait</label
+                        >
+                    </div>
+                    <!--Status Process-->
+                    <div
+                        class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3"
+                        >
+                        <input
+                            type="checkbox"
+                            class="custom-control-input"
+                            name="status"
+                            id="process"
+                            onchange="filterStatus(this.id)"
+
+                            />
+                        <label class="custom-control-label" for="process"
+                               >Process</label
+                        >
+                    </div>
+                    <!--Status Done-->
+                    <div
+                        class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3"
+                        >
+                        <input
+                            type="checkbox"
+                            class="custom-control-input"
+                            name="status"
+                            id="done"
+                            onchange="filterStatus(this.id)"
+
+                            />
+                        <label class="custom-control-label" for="done"
+                               >Done</label
+                        >
+                    </div>
+                </form>
+            </div>
+
+            <script>
+                function filterStatus(value) {
+                    console.log(value);
+                    const urlParams = new URLSearchParams(window.location.search);
+                    let service = urlParams.get('service');
+
+                    if (service === null) {
+                        service = "filterStatus";
+                    }
+
+                    window.location.href = "manageBill?service=" + service + "&filter=" + value;
+
+                }
+            </script>
+            <!--Filter by status End-->
             <div class="col-lg-12 table-responsive mb-5">
                 <table class="table table-bordered text-center mb-0">
                     <thead class="bg-secondary text-dark">
@@ -52,6 +139,9 @@
         </c:if>
 
         <c:if test="${not empty billDetails}">
+
+
+
             <div class="col-lg-12 table-responsive mb-5">
                 <table class="table table-bordered text-center mb-0">
                     <thead class="bg-secondary text-dark">
@@ -86,13 +176,14 @@
                             </tr>
                             <c:set var="subtotal" value="${billDetail.subTotal}" />
                             <c:set var="total" value="${total + subtotal}" />
+                            <c:set var="statusInShowDetail" value="${status}"/>
                         </c:forEach>
                         <tr><td colspan="7">&nbsp;</td></tr>
                         <tr>
                             <td colspan="4" style="text-align: right">Change Status of this Bill To:</td>
-                            <td><a href="manageBill?service=changeStatusToWait&billId=${billId}">Wait</a></td>
-                            <td><a href="manageBill?service=changeStatusToProcess&billId=${billId}">Process</a></td>
-                            <td><a href="manageBill?service=changeStatusToDone&billId=${billId}">Done</a></td>
+                            <td><a href="manageBill?service=changeStatusToWait&billId=${billId}&statusInShowDetail=${statusInShowDetail}">Wait</a></td>
+                            <td><a href="manageBill?service=changeStatusToProcess&billId=${billId}&statusInShowDetail=${statusInShowDetail}">Process</a></td>
+                            <td><a href="manageBill?service=changeStatusToDone&billId=${billId}&statusInShowDetail=${statusInShowDetail}">Done</a></td>
                         </tr>
                     </tbody>
                 </table>
