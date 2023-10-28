@@ -157,6 +157,7 @@ public class ProductDAO extends DBContext {
                     .getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
+                stm.close();
                 rs.close();
                 connection.close();
             } catch (SQLException ex) {
