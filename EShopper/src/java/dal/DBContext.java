@@ -26,7 +26,7 @@ public class DBContext {
     }
     
     public ResultSet getData(String sqlQuery) {
-        ResultSet rs = null;
+        ResultSet rs;
         Statement statement;
         try {
             statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
