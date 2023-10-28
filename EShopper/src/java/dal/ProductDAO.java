@@ -138,7 +138,7 @@ public class ProductDAO extends DBContext {
 
     public int deletetProduct(int id) {
         int n = 0;
-        PreparedStatement stm = null;
+        PreparedStatement stm;
         ResultSet rs = getData("select * from [dbo].[order_detail] where product_id = " + id);
 
         String sql = "DELETE FROM [dbo].[product]\n"
