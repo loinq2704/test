@@ -33,7 +33,13 @@ public class DBContext {
             rs = statement.executeQuery(sqlQuery);
         } catch (SQLException ex) {
             Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }finally{
+            try{
+                statement.close();
+                rs.close();
+            } catch (Exception ex1){
+            }
+        }    
         return rs;
     }
 }
