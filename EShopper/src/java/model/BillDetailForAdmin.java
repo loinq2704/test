@@ -25,7 +25,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class billDetailForAdmin {
+public class BillDetailForAdmin {
     private int id;
     private String customerName;
     private Date created_date;
