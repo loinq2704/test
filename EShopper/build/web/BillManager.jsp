@@ -106,6 +106,7 @@
             <!--Filter by status End-->
             <div class="col-lg-12 table-responsive mb-5">
                 <table class="table table-bordered text-center mb-0">
+                    <caption>Table of Customer</caption>
                     <thead class="bg-secondary text-dark">
                         <tr>
                             <th>ID</th>
